@@ -1,149 +1,932 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>TRUSTINCloudS</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRUSTINCloudS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <style>
-body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
-body {font-size:16px;}
-.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
-.w3-half img:hover{opacity:1}
-    </style>
-  </head>
+  :root {
+    --bg: #08101E;
+    --bg2: #0D1A2E;
+    --card: #111F36;
+    --border: #1E3550;
+    --accent: #00C8FF;
+    --accent2: #4F8EFF;
+    --text: #E8F0FF;
+    --muted: #6B84A8;
+    --muted2: #3D5578;
+    --white: #F5F9FF;
+    --nav-bg: rgba(8, 16, 30, 0.85);
+    --desc-text: #A8BDD8;
+  }
 
-  <body>
-    <!-- Sidebar/menu -->
-    <nav class="w3-sidebar w3-white w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
-      <div class="w3-container">
-        <img src="trustinclouds_logo_1.svg" alt="logo" style="width:90%">
-      </div>
+  html.light {
+    --bg: #F0F4FA;
+    --bg2: #E4EAF5;
+    --card: #FFFFFF;
+    --border: #C8D5E8;
+    --accent: #0088BB;
+    --accent2: #2B5FCC;
+    --text: #0D1A2E;
+    --muted: #4A6285;
+    --muted2: #8FA8C8;
+    --white: #0D1A2E;
+    --nav-bg: rgba(240, 244, 250, 0.88);
+    --desc-text: #2E4A6A;
+  }
 
-      <div class="w3-bar-block w3-white">
-        <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
-        <a href="#description" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Description</a>
-        <a href="#workpackages" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Work packages</a>
-        <a href="#publications" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Publications</a>
-        <a href="#openpositions" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Open Positions</a>
-      </div>
+  html { scroll-behavior: smooth; }
 
-      <div class="w3-container">
-        <img src="logo_anr.svg" alt="logo_anr" style="width:90%">
-      </div>
-    </nav>
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    transition: background 0.35s, color 0.35s;
+  }
 
-    <!-- Top menu on small screens -->
-    <header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
-      <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
-      <span>TRUSTINCloudS</span>
-    </header>
+  /* ── THEME TOGGLE ── */
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2rem;
+    padding: 0.3rem 0.75rem 0.3rem 0.5rem;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    transition: border-color 0.2s, color 0.2s, background 0.35s;
+    flex-shrink: 0;
+  }
 
-    <!-- Overlay effect when opening sidebar on small screens -->
-    <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
-    <!-- !PAGE CONTENT! -->
-    <div class="w3-main" style="margin-left:340px;margin-right:40px">
+  .toggle-icon { font-size: 1rem; line-height: 1; }
 
-      <!-- Header -->
-      <div class="w3-container" style="margin-top:80px" id="showcase">
-        <h1 class="w3-jumbo"><b>TRUSTINCloudS</b></h1>
-        <p>TRUSTINCloudS is funded by the France 2030 program managed by the French ANR. It is one of the projects funded within the PEPR Cloud. It involves the following partners: Université Aix-Marseille, Université Toulouse III Paul Sabatier, Université de Lorraine, Institut Mines-Télécom, INRIA, EURECOM and CEA.</p>
-        <img src="logos.svg" alt="logos" style="width:80%">
-      </div>
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 64px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.35s, border-color 0.35s;
+  }
 
-      <!-- Descritpion -->
-      <div class="w3-container" id="description" style="margin-top:75px">
-        <h1 class="w3-xxxlarge w3-text-black"><b>Description.</b></h1>
-        <hr style="width:50px;border:5px solid black" class="w3-round">
-        <p>The TRUSTINCloudS project investigates solutions for the major cybersecurity challenges of Cloud environments. The project adapts traditional security mechanisms (e.g. those from PEPR Cyber) to address the specific threats of the different types of Clouds (IaaS, PaaS,...). Indeed, TRUSTINCloudS specifies and implements new methodologies to strengthen Cloud security and to build a sovereign and trusted Cloud. It investigates on the one hand the security of Cloud infrastructures, and on the other hand the security of the outsourced data. The project will carry out scientific actions on these two main axis, with the objective of developing new methods and tools. For validation, proofs of concept will be implemented within the shared infrastructure provided by the SILECS project. </p>
-      </div>
+  .nav-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
 
-      <!-- Workpackages -->
-      <div class="w3-container" id="workpackages" style="margin-top:75px">
-        <h1 class="w3-xxxlarge w3-text-black"><b>Work packages.</b></h1>
-        <hr style="width:50px;border:5px solid black" class="w3-round">
-        <p>The TRUSTINCloudS project is organized into six work packages (WPs). The first work package (WP0) is about project management. The WP1 is related to risk analysis and threats identification in highly dynamic mutli-clouds infrastructures. It also provides methods for insfrastructure auditing and control. The WP2 investigates solutions for infrastructures protection and in particular carries research on incidents detection, prevention and mitigation. The WP3 identifies risks related to sensitive data management and usability. It evaluates users’ acceptability for a more secure usage of their data. The WP4 specifies a set of privacy enhancing technologies for protecting sensitive data. Finally, the WP5 provides implementations and proof of concepts for the investigated solutions. </p>
-      </div>
+  .nav-brand span {
+    color: var(--accent);
+  }
 
-      <!-- Publications -->
-      <div class="w3-container" id="publications" style="margin-top:75px">
-        <h1 class="w3-xxxlarge w3-text-black"><b>Publications.</b></h1>
-        <hr style="width:50px;border:5px solid black" class="w3-round">
+  .nav-logo {
+    height: 36px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+  }
 
-	<ul> <b><font size="+2"> 2026 </font></b>
-	          <li>Victor Henrique de Moura Netto, Thibault Cholez, Claudia-Lavinia Ignat. <em>Active Sybil attack and efficient defense strategy in IPFS DHT.</em> Computer Networks, 2026, 282. ⟨hal-05424411v2⟩</li>
-	          <li>Baptiste Bazin, Clara Bertolissi, Alexis Bonnecaze, Kevin Thiry-Atighehchi. <em>Breaking Anonymity in Attribute-Based Access Control Encryption.</em> The 41st ACM/SIGAPP Symposium On Applied Computing, ACM/SIGAPP, Mar 2026, Théssalonique, Greece. ⟨hal-05429402⟩</li>
-	          <li>Samuel Graepler, Benjamin Monmege, Jean-Marc Talbot. <em>Reasoning About Quality in Hyperproperties.</em> 34th EACSL Annual Conference on Computer Science Logic (CSL 2026), 2026, Paris, France. ⟨hal-05531778⟩</li>
-	</ul>
-	
-        <ul> <b><font size="+2"> 2025 </font></b>
-          <li> Adda-Akram Bendoukha, Didem Demirag, Nesrine Kaaniche, Aymen Boudguiga, Renaud Sirdey, Sébastien Gams. <em>Towards privacy-preserving and fairness-aware federated learning framework.</em> Privacy Enhancing Technologies (PETs), Jul 2025, Washinghton, DC, United States.<a href=https://hal.science/hal-04782394v1>⟨hal-04782394⟩</a> </li>
-          <li>Daniele Canavese, Romain Laborde, Abir Laraba, Afonso Ferreira, Abdelmalek Benzekri. <em> Game of Zones: An Automated Intent-Based Network Micro-segmentation Methodology.</em> 38th IEEE/IFIP Network Operations and Management Symposium (NOMS 2025), May 2025, Honolulu, United States. <a href=https://hal.science/hal-04948011v1>⟨hal-04948011⟩</a></li>
-          <li> Afonso Ferreira, Alfredo Goldman. <em> ComplOps Research: Navigating the Digital Regulation Revolution.</em> 2025.<a href=https://hal.science/hal-04930047v1>⟨hal-04930047⟩</a></li>
-          <li> Ouail Derghal, Jean-Christophe Bach, Fabien Dagnat. <em>Towards a Constraint-Driven Deployment Process for Cloud-Native Applications.</em> 13th IEEE International Conference on Cloud Engineering (IC2E 2025), Sep 2025, Rennes, France. ⟨hal-05206415⟩</li>
-          <li>Antonin Verdier, Romain Laborde, Abdelmalek Benzekri. <em>GReAT-BeD: Graph Rewriting for Activity Tracking and (Malicious) Behaviour Detection.</em> 29th International Conference on Knowledge-Based and Intelligent Information & Engineering Systems (KES 2025), Sep 2025, Osaka, Japan. ⟨hal-05250781⟩</li>
-          <li>Mohamed-Amine Ben Haj Salah, Romain Laborde, Daniele Canavese, Abdelmalek Benzekri, Mohamed Ali Kandi<em>XCId : An SSI-Based Cross-Cloud Identity Wallet.</em> IEEE Conference on Communications and Network Security (IEEE CNS 2025), Sep 2025, Avignon, France. ⟨hal-05250789⟩</li>
-          <li>Adda-Akram Bendoukha, Renaud Sirdey, Aymen Boudguiga, Nesrine Kaaniche. <em>Unveiling the (in) security of threshold FHE-based federated learning: the practical impact of recent CPA D attacks.</em> 2025 IEEE 38th Computer Security Foundations Symposium (CSF), Jun 2025, Santa cruz, United States. ⟨hal-05105133⟩</li>
-          <li>Daphne Trama, Renaud Sirdey, Aymen Boudguiga, Pierre-Emmanuel Clet, Nicolas Ye. <em>Designing a general-purpose 8-bit (T)FHE processor abstraction.</em> Conference on Cryptographic Hardware and Embedded Systems, Sep 2025, Kuala Lumpur, Malaysia. ⟨cea-05043043⟩</li>
-        </ul>
+  /* hide/show logos based on theme */
+  .logo-dark { display: block; }
+  .logo-light { display: none; }
+  html.light .logo-dark { display: none; }
+  html.light .logo-light { display: block; }
 
-        <ul> <b><font size="+2"> 2024 </font></b>
-          <li>Antonin Verdier, Romain Laborde, Abir Laraba, Abdelmalek Benzekri.<em> DID U Misbehave? A New Dataset for In-Depth Understanding of Inconspicuous Software.</em> 2024 8th Cyber Security in Networking Conference (CSNet), Dec 2024. <a href="https://hal.science/hal-04957256v1">⟨hal-04957256v1⟩</a> </li>
-          <li> Mohamed-Amine Ben Haj Salah, Romain Laborde, Abdelmalek Benzekri, Mohamed Ali Kandi, Afonso Ferreira.<em> Identity management in cross-cloud environments: Towards self-sovereign identities using current solutions.</em> Nov 2024, France. <a href="https://hal.science/hal-04668399v1">⟨hal-04668399⟩</a></li>
-          <li>Marina Checri, Renaud Sirdey, Aymen Boudguiga, Jean-Paul Bultel.<em> On the practical CPAD security of “exact” and threshold FHE schemes and libraries.</em> Crypto 2024 - 44th Annual International Cryptology Conference, Aug 2024, Santa Barbara, United States. ⟨10.1007/978-3-031-68382-4_1⟩.<a href="https://cea.hal.science/cea-04706832">⟨cea-04706832⟩</a></li>
-          <li>Nathan Monsoro, Célia Martinie, Philippe Palanque, Théo Saubanère.<em> A Systematic Task and Knowledge-Based Process to Tune Cybersecurity Training to User Learning Groups: Application to Email Phishing Attacks.</em> 18th International Symposium on Human Aspects of Information Security and Assurance, IFIP Work Group 11.12, Jul 2024, Skövde, Sweden. <a href="ttps://hal.science/hal-04727127v1 ">⟨hal-04727127⟩</a></li>
-          <li> Thibault Cholez, Claudia-Lavinia Ignat. <em> Sybil Attack Strikes Again: Denying Content Access in IPFS with a Single Computer.</em> ARES 2024: The 19th International Conference on Availability, Reliability and Security, Jul 2024, Vienna, Austria. pp.1-7, ⟨10.1145/3664476.3664482⟩. <a href="https://hal.science/hal-04666290">⟨hal-04666290⟩</a> </li>
-          <li> Pierre Charreaux, Alexandre Reiffers-Masson, Francoise Sailhan, Sandrine Vaton. <em> Minmax Restless Bandits for Efficient Moving Target Defense.</em> Rendez-vous de la Recherche et de l'Enseignement de la Sécurité des Systèmes d'Information (RESSI), May 2024, Eppe-Sauvage, France. <a href="https://hal.science/hal-04564665v2"> ⟨hal-04564665v2)</a> </li>
-          <li> Pierre Charreaux, Alexandre Reiffers-Masson, Francoise Sailhan, Sandrine Vaton. <em> Mélange de ports et d’IP par processus de décision markoviens min-max.</em> AlgoTel 2024 – 26èmes Rencontres Francophones sur les Aspects Algorithmiques des Télécommunications, May 2024, Saint-Briac-sur-Mer, France. <a href="https://hal.science/hal-04564677v2"> ⟨hal-04564677v2⟩</a> </li>
-           <li> Daniele Canavese, Afonso Ferreira, Romain Laborde, Mohamed Ali Kandi. Preprint: <em> Artificial Intelligence Systems in the European Union: Guidelines and Architectures for Compliance-by-Design.</em>  <a href="https://hal.science/hal-04794994v1">⟨hal-04794994⟩</a></li>
-       </ul>
-      </div>
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
 
-      <!-- Open Positions -->
- <!--     <div class="w3-container" id="openpositions" style="margin-top:75px">
-        <h1 class="w3-xxxlarge w3-text-black"><b>Open Positions.</b></h1>
-        <hr style="width:50px;border:5px solid black" class="w3-round">
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
 
-        <ul>
-          <b><font size="+2"> PhD Subjects </font></b>
-          <li><a href="https://pepr-cloud.fr/files/2024/10/PEPR_PhD_ACinCloud.pdf">Authorization specification and management in cloud infrastructures</a></li>
-        </ul>
-      </div>
--->
-      <!-- End page content -->
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    overflow: hidden;
+  }
+
+  #particle-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.55;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title .accent { color: var(--accent); }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--muted);
+    max-width: 680px;
+    margin: 1.5rem auto 3rem;
+    font-weight: 300;
+    position: relative;
+    line-height: 1.8;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--border);
+    background: rgba(0, 200, 255, 0.06);
+    border-radius: 2rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    position: relative;
+  }
+
+  .hero-partners {
+    position: relative;
+    margin-top: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+  }
+
+  .partner-chip {
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 6px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .partner-chip:hover { border-color: var(--accent2); color: var(--white); }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .divider {
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  /* ── DESCRIPTION ── */
+  .desc-text {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--desc-text);
+    max-width: 820px;
+  }
+
+  .desc-text strong { color: var(--accent); font-weight: 500; }
+
+  /* ── WORK PACKAGES ── */
+  .wp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .wp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s, background 0.35s;
+  }
+
+  .wp-card:hover {
+    border-color: var(--accent2);
+    transform: translateY(-3px);
+  }
+
+  .wp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .wp-card:hover::before { opacity: 1; }
+
+  .wp-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+  }
+
+  .wp-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .wp-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── PUBLICATIONS ── */
+  .pub-year-group {
+    margin-bottom: 3rem;
+  }
+
+  .pub-year {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--white);
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pub-list { list-style: none; }
+
+  .pub-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    margin-bottom: 0.75rem;
+    transition: border-color 0.2s;
+  }
+
+  .pub-item:hover { border-color: var(--muted2); }
+
+  .pub-authors {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+    font-style: italic;
+  }
+
+  .pub-title-text {
+    font-size: 0.92rem;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 0.35rem;
+  }
+
+  .pub-venue {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .pub-link {
+    flex-shrink: 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent2);
+    text-decoration: none;
+    border: 1px solid var(--accent2);
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+    align-self: center;
+  }
+
+  .pub-link:hover { background: var(--accent2); color: var(--white); }
+
+  /* ── OPEN POSITIONS ── */
+  .positions-box {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 3rem;
+    background: linear-gradient(135deg, var(--card), var(--bg2));
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .positions-box::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2), transparent 60%);
+    z-index: -1;
+    opacity: 0.35;
+  }
+
+  .positions-box h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .positions-box p {
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 2rem;
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn:hover { opacity: 0.88; transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .footer-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-brand .accent { color: var(--accent); }
+
+  footer p {
+    font-size: 0.8rem;
+    color: var(--muted2);
+  }
+
+  /* ── ANR badge ── */
+  .anr-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--border);
+    background: rgba(79, 142, 255, 0.07);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    color: var(--accent2);
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { gap: 1.25rem; }
+    .nav-links a { font-size: 0.75rem; }
+    section { padding: 4rem 1.25rem; }
+    .positions-box { padding: 2rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">
+    <!-- Dark mode logo — replace src with your actual dark logo file -->
+    <img class="nav-logo logo-dark"  src="logo-dark.svg"  alt="TRUSTINCloudS logo"
+         style="margin-right:0.6rem"
+         onload="document.getElementById('nav-dot-fallback').style.display='none'"
+         onerror="this.style.display='none'">
+    <!-- Light mode logo — replace src with your actual light logo file -->
+    <img class="nav-logo logo-light" src="logo-light.svg" alt="TRUSTINCloudS logo"
+         style="margin-right:0.6rem"
+         onload="document.getElementById('nav-dot-fallback').style.display='none'"
+         onerror="this.style.display='none'">
+    <!-- Fallback dot shown when no logo is loaded -->
+    <div id="nav-dot-fallback" class="nav-dot" style="flex-shrink:0;margin-right:0.6rem"></div>TRUST<span>IN</span>CloudS
+  </a>
+  <ul class="nav-links">
+    <li><a href="#description">Description</a></li>
+    <li><a href="#workpackages">WPs</a></li>
+    <li><a href="#publications">Papers</a></li>
+    <li><a href="#openpositions">Positions</a></li>
+  </ul>
+  <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle light/dark mode">
+    <span class="toggle-icon" id="themeIcon">☀️</span>
+    <span id="themeLabel">Light</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="hero-eyebrow">ANR — France 2030 · PEPR Cloud</div>
+
+  <h1 class="hero-title">
+    TRUST<span class="accent">IN</span>CloudS
+  </h1>
+
+  <p class="hero-subtitle">
+    Building a <strong style="color:var(--text)">sovereign and trusted Cloud</strong> through cutting-edge cybersecurity research — protecting infrastructures and outsourced data in IaaS, PaaS, and beyond.
+  </p>
+
+  <div class="anr-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    Funded by France 2030 via ANR
+  </div>
+
+  <div class="hero-partners">
+    <div class="partner-chip">Université Aix-Marseille</div>
+    <div class="partner-chip">Univ. Toulouse III Paul Sabatier</div>
+    <div class="partner-chip">Université de Lorraine</div>
+    <div class="partner-chip">Institut Mines-Télécom</div>
+    <div class="partner-chip">INSA Val de Loire</div>
+    <div class="partner-chip">INRIA</div>
+    <div class="partner-chip">EURECOM</div>
+    <div class="partner-chip">CEA</div>
+  </div>
+</div>
+
+<!-- DESCRIPTION -->
+<section id="description">
+  <div class="section-label">About the project</div>
+  <h2 class="section-title">Description</h2>
+  <div class="divider"></div>
+  <p class="desc-text">
+    The TRUSTINCloudS project investigates solutions for the major <strong>cybersecurity challenges</strong> of Cloud environments. It adapts traditional security mechanisms to address the specific threats of different Cloud types (IaaS, PaaS, …). TRUSTINCloudS specifies and implements new methodologies to strengthen Cloud security and to build a <strong>sovereign and trusted Cloud</strong>.<br><br>
+    It investigates both the security of <strong>Cloud infrastructures</strong> and the security of <strong>outsourced data</strong> — two main scientific axes aimed at developing new methods and tools. Proofs of concept will be implemented within the shared infrastructure provided by the SILECS project.
+  </p>
+</section>
+
+<!-- WORK PACKAGES -->
+<section id="workpackages">
+  <div class="section-label">Structure</div>
+  <h2 class="section-title">Work Packages</h2>
+  <div class="divider"></div>
+  <div class="wp-grid">
+    <div class="wp-card">
+      <div class="wp-number">WP0</div>
+      <div class="wp-title">Project Management</div>
+      <div class="wp-desc">Coordination and administrative management of all project activities and partner institutions.</div>
+    </div>
+    <div class="wp-card">
+      <div class="wp-number">WP1</div>
+      <div class="wp-title">Risk Analysis & Threat Identification</div>
+      <div class="wp-desc">Risk analysis and threat identification in highly dynamic multi-cloud infrastructures. Infrastructure auditing and control methods.</div>
+    </div>
+    <div class="wp-card">
+      <div class="wp-number">WP2</div>
+      <div class="wp-title">Infrastructure Protection</div>
+      <div class="wp-desc">Research on incident detection, prevention, and mitigation strategies for Cloud infrastructure protection.</div>
+    </div>
+    <div class="wp-card">
+      <div class="wp-number">WP3</div>
+      <div class="wp-title">Sensitive Data Management</div>
+      <div class="wp-desc">Identification of risks related to sensitive data management and usability. Evaluation of users' acceptability for more secure data usage.</div>
+    </div>
+    <div class="wp-card">
+      <div class="wp-number">WP4</div>
+      <div class="wp-title">Privacy Enhancing Technologies</div>
+      <div class="wp-desc">Specification of a set of privacy enhancing technologies for protecting sensitive data in Cloud environments.</div>
+    </div>
+    <div class="wp-card">
+      <div class="wp-number">WP5</div>
+      <div class="wp-title">Implementations & Proofs of Concept</div>
+      <div class="wp-desc">Concrete implementations and proof-of-concept validations for all investigated solutions across the project.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="section-label">Research output</div>
+  <h2 class="section-title">Publications</h2>
+  <div class="divider"></div>
+
+  <div class="pub-year-group">
+    <div class="pub-year">2026</div>
+    <ul class="pub-list">
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">De Moura Netto, Cholez, Ignat</div>
+          <div class="pub-title-text">Active Sybil attack and efficient defense strategy in IPFS DHT</div>
+          <div class="pub-venue">Computer Networks, 2026</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-05424411v2" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">De Moura Netto, Cholez, Ignat</div>
+          <div class="pub-title-text">Attaque Sybil active et stratégie de défense efficace appliquée à la DHT d'IPFS</div>
+          <div class="pub-venue">RESSI 2026, Clervaux, Luxermbourg</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-05644727v1" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Bazin, Bertolissi, Bonnecaze, Thiry-Atighehchi</div>
+          <div class="pub-title-text">Breaking Anonymity in Attribute-Based Access Control Encryption</div>
+          <div class="pub-venue">ACM SAC 2026, Thessaloniki, Greece</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-05429402" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Graepler, Monmege, Talbot</div>
+          <div class="pub-title-text">Reasoning About Quality in Hyperproperties</div>
+          <div class="pub-venue">CSL 2026, Paris, France</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-05531778" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Ferreira, Goldman Vel Lejbman, Patel</div>
+          <div class="pub-title-text">Compliance operations research: navigating the digital regulation revolution</div>
+          <div class="pub-venue">Computer, 2026</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-04930047v1" target="_blank">HAL ↗</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="pub-year-group">
+    <div class="pub-year">2025</div>
+    <ul class="pub-list">
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Ider, Laurent</div>
+          <div class="pub-title-text">GeoFINDR: practical approach to verify cloud instances geolocation in multicloud</div>
+          <div class="pub-venue">Computer Networks, 2025</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-05376087v1" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Attiya, Anta, Milani, Rapetti, Travers</div>
+          <div class="pub-title-text">Auditing without leak despite curiosity</div>
+          <div class="pub-venue">ACM PODC 2025, Huatulco, Mexico</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-05555152v3" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Bendoukha, Demirag, Kaaniche, Boudguiga, Sirdey, Gams</div>
+          <div class="pub-title-text">Towards privacy-preserving and fairness-aware federated learning framework</div>
+          <div class="pub-venue">PoPETs 2025, Washington DC, USA</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-04782394v1" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Canavese, Laborde, Laraba, Ferreira, Benzekri</div>
+          <div class="pub-title-text">Game of Zones: An Automated Intent-Based Network Micro-segmentation Methodology</div>
+          <div class="pub-venue">IEEE/IFIP NOMS 2025, Honolulu, USA</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-04948011v1" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Derghal, Bach, Dagnat</div>
+          <div class="pub-title-text">Towards a Constraint-Driven Deployment Process for Cloud-Native Applications</div>
+          <div class="pub-venue">IEEE IC2E 2025, Rennes, France</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-05206415" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Verdier, Laborde, Benzekri</div>
+          <div class="pub-title-text">GReAT-BeD: Graph Rewriting for Activity Tracking and (Malicious) Behaviour Detection</div>
+          <div class="pub-venue">KES 2025, Osaka, Japan</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-05250781" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Ben Haj Salah, Laborde, Canavese, Benzekri, Kandi</div>
+          <div class="pub-title-text">XCId: An SSI-Based Cross-Cloud Identity Wallet</div>
+          <div class="pub-venue">IEEE CNS 2025, Avignon, France</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-05250789" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Bendoukha, Sirdey, Boudguiga, Kaaniche</div>
+          <div class="pub-title-text">Unveiling the (in)security of threshold FHE-based federated learning</div>
+          <div class="pub-venue">IEEE CSF 2025, Santa Cruz, USA</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-05105133" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Trama, Sirdey, Boudguiga, Clet, Ye</div>
+          <div class="pub-title-text">Designing a general-purpose 8-bit (T)FHE processor abstraction</div>
+          <div class="pub-venue">CHES 2025, Kuala Lumpur, Malaysia</div>
+        </div>
+        <a class="pub-link" href="https://cea.hal.science/cea-05043043" target="_blank">HAL ↗</a>
+      </li>
+       <li class="pub-item">
+        <div>
+          <div class="pub-authors">Canavese, Ferreira, Laborde, Kandi</div>
+          <div class="pub-title-text">Towards an architecture for managing security under the EU Cyber Resilience Act</div>
+          <div class="pub-venue">STM 2025, Toulouse, France</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-05139698v1" target="_blank">HAL ↗</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="pub-year-group">
+    <div class="pub-year">2024</div>
+    <ul class="pub-list">
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Verdier, Laborde, Laraba, Benzekri</div>
+          <div class="pub-title-text">DID U Misbehave? A New Dataset for In-Depth Understanding of Inconspicuous Software</div>
+          <div class="pub-venue">CSNet 2024, Paris, France</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-04957256v1" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Ben Haj Salah, Laborde, Benzekri, Kandi, Ferreira</div>
+          <div class="pub-title-text">Identity management in cross-cloud environments: Towards self-sovereign identities</div>
+          <div class="pub-venue">CRISIS 2024, Aix-en-Provence, France</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-04668399v1" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Checri, Sirdey, Boudguiga, Bultel</div>
+          <div class="pub-title-text">On the practical CPAD security of "exact" and threshold FHE schemes and libraries</div>
+          <div class="pub-venue">Crypto 2024, Santa Barbara, USA</div>
+        </div>
+        <a class="pub-link" href="https://cea.hal.science/cea-04706832" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Monsoro, Martinie, Palanque, Saubanère</div>
+          <div class="pub-title-text">A Systematic Task and Knowledge-Based Process to Tune Cybersecurity Training to User Learning Groups</div>
+          <div class="pub-venue">HAISA 2024, Skövde, Sweden</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-04727127v1" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Cholez, Ignat</div>
+          <div class="pub-title-text">Sybil Attack Strikes Again: Denying Content Access in IPFS with a Single Computer</div>
+          <div class="pub-venue">ARES 2024, Vienna, Austria</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-04666290" target="_blank">HAL ↗</a>
+      </li>
+      <li class="pub-item">
+        <div>
+          <div class="pub-authors">Charreaux, Reiffers-Masson, Sailhan, Vaton</div>
+          <div class="pub-title-text">Minmax Restless Bandits for Efficient Moving Target Defense</div>
+          <div class="pub-venue">RESSI 2024, Eppe-Sauvage, France</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-04564665v2" target="_blank">HAL ↗</a>
+      </li>
+     <li class="pub-item">
+        <div>
+          <div class="pub-authors">Charreaux, Reiffers-Masson, Sailhan, Vaton</div>
+          <div class="pub-title-text">Mélange des ports et d'IP par processurs de décision markoviens min-max</div>
+          <div class="pub-venue">AlgoTel 2024, Saint-Briac-sur-Mer, France</div>
+        </div>
+        <a class="pub-link" href="https://hal.science/hal-04564665v2" target="_blank">HAL ↗</a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- OPEN POSITIONS -->
+<section id="openpositions" style="max-width:860px">
+  <div class="section-label">Join us</div>
+  <h2 class="section-title">Open Positions</h2>
+  <div class="divider"></div>
+  <div class="positions-box">
+    <h3>We are recruiting</h3>
+    <p>We are actively looking for motivated researchers, PhD students, and postdocs to join the TRUSTINCloudS project across our partner institutions. If you're passionate about Cloud security, privacy-enhancing technologies, or distributed systems, we'd love to hear from you.</p>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
       <div id="wcb" class="carbonbadge"></div>
       <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
     </div>
 
-    <!-- W3.CSS Container -->
-    <div class="w3-black w3-container w3-padding-32" style="margin-top:75px;padding-right:58px">
-      <p class="w3-right"> <img src="trustinclouds_logo_white.svg" alt="logo_white" style="width:30%">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></p>
-    </div>
+  <div class="footer-brand">TRUST<span class="accent">IN</span>CloudS</div>
+  <p>Funded by France 2030 · Managed by ANR · Part of PEPR Cloud</p>
+  <p style="margin-top:0.5rem">© 2024–2026 TRUSTINCloudS Consortium</p>
+</footer>
 
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const isLight = html.classList.toggle('light');
+  document.getElementById('themeIcon').textContent = isLight ? '🌙' : '☀️';
+  document.getElementById('themeLabel').textContent = isLight ? 'Dark' : 'Light';
+}
+</script>
 
-    <script>
-      // Script to open and close sidebar
-      function w3_open() {
-        document.getElementById("mySidebar").style.display = "block";
-        document.getElementById("myOverlay").style.display = "block";
+<script>
+// Particle network canvas
+(function() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles;
+
+  const NUM = 55;
+  const CONNECT_DIST = 140;
+  const ACCENT = '0, 200, 255';
+  const ACCENT2 = '79, 142, 255';
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function createParticles() {
+    particles = Array.from({ length: NUM }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.28,
+      vy: (Math.random() - 0.5) * 0.28,
+      r: Math.random() * 1.8 + 0.7,
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    for (let i = 0; i < NUM; i++) {
+      const a = particles[i];
+      for (let j = i + 1; j < NUM; j++) {
+        const b = particles[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONNECT_DIST) {
+          const alpha = (1 - dist / CONNECT_DIST) * 0.35;
+          const mid = i % 2 === 0 ? ACCENT : ACCENT2;
+          ctx.strokeStyle = `rgba(${mid}, ${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
       }
+    }
 
-function w3_close() {
-  document.getElementById("mySidebar").style.display = "none";
-  document.getElementById("myOverlay").style.display = "none";
-}
+    for (const p of particles) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${ACCENT}, 0.7)`;
+      ctx.fill();
 
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
-    </script>
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    }
 
-  </body>
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); });
+  resize();
+  createParticles();
+  draw();
+})();
+</script>
+</body>
 </html>
